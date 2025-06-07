@@ -1,4 +1,5 @@
 import React from "react";
+import { FaFacebook, FaInstagram, FaTiktok, FaXTwitter } from "react-icons/fa6";
 
 const Footer = () => {
 	return (
@@ -78,43 +79,25 @@ const Footer = () => {
 							<h6>NEWSLETTER</h6>
 							<form action="#">
 								<input type="text" placeholder="Email" />
-								<button type="submit" className="site-btn">
+								<button type="submit" className=" site-btn">
 									Subscribe
 								</button>
 							</form>
 							<div className="footer__social">
 								<a href="#">
-									<i className="fa fa-facebook" />
+									<FaFacebook className="fa fa-facebook" />
 								</a>
 								<a href="#">
-									<i className="fa fa-twitter" />
+									<FaXTwitter className="fa fa-twitter" />
 								</a>
 								<a href="#">
-									<i className="fa fa-youtube-play" />
+									<FaInstagram className="fa fa-youtube-play" />
 								</a>
 								<a href="#">
-									<i className="fa fa-instagram" />
-								</a>
-								<a href="#">
-									<i className="fa fa-pinterest" />
+									<FaTiktok className="fa fa-instagram" />
 								</a>
 							</div>
 						</div>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-lg-12">
-						{/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
-						<div className="footer__copyright__text">
-							<p>
-								Copyright © All rights reserved | This template is made with{" "}
-								<i className="fa fa-heart" aria-hidden="true" /> by{" "}
-								<a href="https://colorlib.com" target="_blank">
-									Colorlib
-								</a>
-							</p>
-						</div>
-						{/* Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. */}
 					</div>
 				</div>
 			</div>

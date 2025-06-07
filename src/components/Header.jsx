@@ -1,5 +1,4 @@
-import React from "react";
-
+import { FaBagShopping, FaHeart, FaRegHeart } from "react-icons/fa6";
 const Header = () => {
 	return (
 		<header className="header">
@@ -16,39 +15,18 @@ const Header = () => {
 						<nav className="header__menu">
 							<ul>
 								<li className="active">
-									<a href="./index.html">Home</a>
+									<a href="/">Home</a>
+								</li>
+
+								<li>
+									<a href="/about">About</a>
+								</li>
+
+								<li>
+									<a href="/shop">Shop</a>
 								</li>
 								<li>
-									<a href="#">Women’s</a>
-								</li>
-								<li>
-									<a href="#">Men’s</a>
-								</li>
-								<li>
-									<a href="./shop.html">Shop</a>
-								</li>
-								<li>
-									<a href="#">Pages</a>
-									<ul className="dropdown">
-										<li>
-											<a href="./product-details.html">Product Details</a>
-										</li>
-										<li>
-											<a href="./shop-cart.html">Shop Cart</a>
-										</li>
-										<li>
-											<a href="./checkout.html">Checkout</a>
-										</li>
-										<li>
-											<a href="./blog-details.html">Blog Details</a>
-										</li>
-									</ul>
-								</li>
-								<li>
-									<a href="./blog.html">Blog</a>
-								</li>
-								<li>
-									<a href="./contact.html">Contact</a>
+									<a href="/contact">Contact</a>
 								</li>
 							</ul>
 						</nav>
@@ -65,13 +43,13 @@ const Header = () => {
 								</li>
 								<li>
 									<a href="#">
-										<span className="icon_heart_alt" />
+										<FaRegHeart />
 										<div className="tip">2</div>
 									</a>
 								</li>
 								<li>
 									<a href="#">
-										<span className="icon_bag_alt" />
+										<FaBagShopping />
 										<div className="tip">2</div>
 									</a>
 								</li>
