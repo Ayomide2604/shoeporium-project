@@ -1,10 +1,15 @@
 import "./App.css";
-
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 function App() {
 	return (
-		<div>
-			<h1>App</h1>
-		</div>
+		<>
+			<Header />
+			<div>
+				<h1>Welcome to Shoeporium</h1>
+			</div>
+			<Footer />
+		</>
 	);
 }
 

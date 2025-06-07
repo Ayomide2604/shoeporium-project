@@ -404,6 +404,7 @@ ol {
 	display: block;
 	padding: 2px 0;
 	position: relative;
+	text-decoration: none;
 }
 
 .header__menu ul li a:after {
@@ -977,7 +978,7 @@ ol {
 }
 
 .footer__copyright__text a {
-	color: #5C5C5C;
+	color: #5c5c5c;
 }
 
 .footer__copyright__text i {
@@ -1380,7 +1381,7 @@ ol {
 }
 
 .categories__accordion .card-heading a:after,
-.categories__accordion .card-heading>a.active[aria-expanded=false]:after {
+.categories__accordion .card-heading > a.active[aria-expanded="false"]:after {
 	content: "";
 	font-size: 14px;
 	font-family: "FontAwesome";
@@ -1400,8 +1401,8 @@ ol {
 	top: -1px;
 }
 
-.categories__accordion .card-heading a[aria-expanded=true]:after,
-.categories__accordion .card-heading>a.active:after {
+.categories__accordion .card-heading a[aria-expanded="true"]:after,
+.categories__accordion .card-heading > a.active:after {
 	content: "";
 	font-size: 14px;
 	font-family: "FontAwesome";
@@ -1530,13 +1531,13 @@ ol {
 	visibility: hidden;
 }
 
-.sidebar__sizes .size__list label input:checked~.checkmark,
-.sidebar__color .size__list label input:checked~.checkmark {
+.sidebar__sizes .size__list label input:checked ~ .checkmark,
+.sidebar__color .size__list label input:checked ~ .checkmark {
 	border-color: #ca1515;
 }
 
-.sidebar__sizes .size__list label input:checked~.checkmark:after,
-.sidebar__color .size__list label input:checked~.checkmark:after {
+.sidebar__sizes .size__list label input:checked ~ .checkmark:after,
+.sidebar__color .size__list label input:checked ~ .checkmark:after {
 	border-color: #ca1515;
 	opacity: 1;
 }
@@ -1740,7 +1741,7 @@ ol {
 	margin-bottom: 10px;
 }
 
-.quantity>span {
+.quantity > span {
 	font-size: 14px;
 	color: #111111;
 	font-weight: 600;
@@ -1869,11 +1870,23 @@ ol {
 	visibility: hidden;
 }
 
-.product__details__widget ul li .stock__checkbox label input:checked~.checkmark {
+.product__details__widget
+	ul
+	li
+	.stock__checkbox
+	label
+	input:checked
+	~ .checkmark {
 	border-color: #ca1515;
 }
 
-.product__details__widget ul li .stock__checkbox label input:checked~.checkmark:after {
+.product__details__widget
+	ul
+	li
+	.stock__checkbox
+	label
+	input:checked
+	~ .checkmark:after {
 	border-color: #ca1515;
 	opacity: 1;
 }
@@ -1910,7 +1923,13 @@ ol {
 	margin-right: 20px;
 }
 
-.product__details__widget ul li .color__checkbox label.active input~.checkmark:after {
+.product__details__widget
+	ul
+	li
+	.color__checkbox
+	label.active
+	input
+	~ .checkmark:after {
 	border-color: #ffffff;
 	opacity: 1;
 }
@@ -1924,7 +1943,13 @@ ol {
 	visibility: hidden;
 }
 
-.product__details__widget ul li .color__checkbox label input:checked~.checkmark:after {
+.product__details__widget
+	ul
+	li
+	.color__checkbox
+	label
+	input:checked
+	~ .checkmark:after {
 	border-color: #ffffff;
 	opacity: 1;
 }
@@ -2117,12 +2142,23 @@ ol {
 	padding-top: 23px;
 }
 
-.shop__cart__table tbody tr .cart__product__item .cart__product__item__title h6 {
+.shop__cart__table
+	tbody
+	tr
+	.cart__product__item
+	.cart__product__item__title
+	h6 {
 	color: #111111;
 	font-weight: 600;
 }
 
-.shop__cart__table tbody tr .cart__product__item .cart__product__item__title .rating i {
+.shop__cart__table
+	tbody
+	tr
+	.cart__product__item
+	.cart__product__item__title
+	.rating
+	i {
 	font-size: 10px;
 	color: #e3c01c;
 	margin-right: -4px;
@@ -2391,11 +2427,15 @@ ol {
 	visibility: hidden;
 }
 
-.checkout__form .checkout__form__checkbox label input:checked~.checkmark {
+.checkout__form .checkout__form__checkbox label input:checked ~ .checkmark {
 	border-color: #ca1515;
 }
 
-.checkout__form .checkout__form__checkbox label input:checked~.checkmark:after {
+.checkout__form
+	.checkout__form__checkbox
+	label
+	input:checked
+	~ .checkmark:after {
 	border-color: #ca1515;
 	opacity: 1;
 }
@@ -2524,11 +2564,11 @@ ol {
 	visibility: hidden;
 }
 
-.checkout__order__widget label input:checked~.checkmark {
+.checkout__order__widget label input:checked ~ .checkmark {
 	border-color: #ca1515;
 }
 
-.checkout__order__widget label input:checked~.checkmark:after {
+.checkout__order__widget label input:checked ~ .checkmark:after {
 	border-color: #ca1515;
 	opacity: 1;
 }
