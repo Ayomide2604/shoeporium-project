@@ -32,7 +32,7 @@ const ShopSidebar = ({ categories, selectedCategory, onSelectCategory }) => {
 									<ul className="text-secondary ">
 										<li className="mb-2">All Shoes</li>
 										{categories.map((category) => (
-											<li className="mb-2 ">{category.name}</li>
+											<li className="mb-2 " key={category.id || category.name}>{category.name}</li>
 										))}
 									</ul>
 								</div>

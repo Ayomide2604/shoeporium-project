@@ -40,9 +40,13 @@ const CartTable = () => {
 									<h6>{item.product?.name}</h6>
 									{item.options && item.options.length > 0 && (
 										<div style={{ fontSize: "0.9em", color: "#888" }}>
-											{item.options
-												.map((opt) => `${opt.name}: ${opt.value}`)
-												.join(", ")}
+											<ul style={{ margin: 0, padding: 0, listStyle: "none" }}>
+												{item.options.map((opt) => (
+													<li key={opt.id || opt.name}>
+														{opt.name}: {String(opt.value)}
+													</li>
+												))}
+											</ul>
 										</div>
 									)}
 								</div>

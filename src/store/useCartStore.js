@@ -2,11 +2,22 @@ import { create } from "zustand";
 import swell from "../utils/swellApi";
 import { toast } from "react-toastify";
 
+// Helper to check authentication
+const requireAuth = async () => {
+	const user = await swell.account.get();
+	if (!user?.email) {
+		toast.error("Please login to use the cart.");
+		return false;
+	}
+	return true;
+};
+
 export const useCartStore = create((set, get) => ({
 	items: [],
 
 	// Get cart from Swell
 	getCart: async () => {
+		if (!(await requireAuth())) return;
 		const swellCart = await swell.cart.get();
 		set({ items: swellCart.items || [] });
 	},
@@ -18,11 +29,7 @@ export const useCartStore = create((set, get) => ({
 		productName = "",
 		options = {}
 	) => {
-		const user = await swell.account.get();
-		if (!user?.email) {
-			toast.error("Please login to add items to your cart.");
-			return;
-		}
+		if (!(await requireAuth())) return;
 		await swell.cart.addItem({ product_id: productId, quantity, options });
 		const swellCart = await swell.cart.get();
 		set({ items: swellCart.items });
@@ -31,6 +38,7 @@ export const useCartStore = create((set, get) => ({
 
 	// Remove item from Swell cart
 	removeFromCart: async (itemId, productName = "") => {
+		if (!(await requireAuth())) return;
 		await swell.cart.removeItem(itemId);
 		const swellCart = await swell.cart.get();
 		set({ items: swellCart.items });
@@ -43,6 +51,7 @@ export const useCartStore = create((set, get) => ({
 
 	// Update item quantity in Swell cart
 	updateCart: async (itemId, quantity) => {
+		if (!(await requireAuth())) return;
 		await swell.cart.updateItem(itemId, { quantity });
 		const swellCart = await swell.cart.get();
 		set({ items: swellCart.items });
@@ -50,6 +59,7 @@ export const useCartStore = create((set, get) => ({
 
 	// Clear Swell cart
 	clearCart: async () => {
+		if (!(await requireAuth())) return;
 		await swell.cart.setItems([]);
 		set({ items: [] });
 		toast.info("Cart cleared.");

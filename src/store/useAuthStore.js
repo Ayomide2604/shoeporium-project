@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import swell from "./../utils/swellApi";
+import { toast } from "react-toastify";
 
 const useAuthStore = create(
 	persist(
@@ -16,9 +17,11 @@ const useAuthStore = create(
 					const session = await swell.account.login(email, password);
 					set({ user: session });
 					console.log("Login successful:", session);
+					toast.success("Login successful!");
 				} catch (err) {
 					set({ error: err.message || "Login failed" });
 					console.error("Login error:", err);
+					toast.error(err.message || "Login failed");
 				} finally {
 					set({ loading: false });
 				}
@@ -33,10 +36,11 @@ const useAuthStore = create(
 						first_name,
 						last_name,
 					});
-					alert("Registration successful");
+					toast.success("Registration successful!");
 				} catch (err) {
 					set({ error: err.message || "Registration failed" });
 					console.error("Registration error:", err);
+					toast.error(err.message || "Registration failed");
 				} finally {
 					set({ loading: false });
 				}
@@ -47,10 +51,11 @@ const useAuthStore = create(
 				try {
 					await swell.account.logout();
 					set({ user: null });
-					alert("Logout successful");
+					toast.info("Logout successful!");
 				} catch (err) {
 					set({ error: err.message || "Logout failed" });
 					console.error("Logout error:", err);
+					toast.error(err.message || "Logout failed");
 				} finally {
 					set({ loading: false });
 				}
