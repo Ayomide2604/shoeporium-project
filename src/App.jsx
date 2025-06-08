@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -8,7 +9,17 @@ import ProductDetailScreen from "./screens/ProductDetailScreen";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import CartScreen from "./screens/CartScreen";
+import { useLocation } from "react-router-dom";
+import { useCartStore } from "./store/useCartStore";
+
 function App() {
+	const location = useLocation();
+	const getCart = useCartStore((state) => state.getCart);
+
+	useEffect(() => {
+		getCart();
+	}, [location]);
+
 	return (
 		<>
 			<Header />

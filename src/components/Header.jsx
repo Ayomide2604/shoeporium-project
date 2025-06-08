@@ -1,13 +1,15 @@
 import { FaBagShopping, FaBars, FaRegHeart, FaX } from "react-icons/fa6";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "../assets/img/site-logo.png";
 import OffCanvas from "./OffCanvas";
 import useAuthStore from "../store/useAuthStore";
 import { Link } from "react-router-dom";
+import { useCartStore } from "../store/useCartStore";
 
 const Header = () => {
 	const [offCanvasOpen, setOffCanvasOpen] = useState(false);
 	const { user, logout } = useAuthStore();
+	const totalCartItems = useCartStore((state) => state.totalCartItems());
 
 	return (
 		<header className="header" style={{ maxHeight: "100px" }}>
@@ -95,7 +97,7 @@ const Header = () => {
 								<li>
 									<Link to="/cart">
 										<FaBagShopping />
-										<div className="tip">2</div>
+										<div className="tip">{totalCartItems}</div>
 									</Link>
 								</li>
 							</ul>

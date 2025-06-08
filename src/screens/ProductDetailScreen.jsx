@@ -4,18 +4,26 @@ import { useEffect, useRef, useState } from "react";
 import useProductStore from "../store/useProductStore";
 import Preloader from "../components/Preloader";
 import formatter from "../utils/currencyFormatter";
-
+import { useCartStore } from "../store/useCartStore";
 import ProductDetailImage from "../components/ProductDetailImage";
+import { toast } from "react-toastify";
 
 const ProductDetailScreen = () => {
 	const { id } = useParams();
 	const { fetchProductById, productLoading, product } = useProductStore();
 	const swiperRef = useRef(null);
 	const [activeIndex, setActiveIndex] = useState(0);
+	const { addToCart } = useCartStore();
+	const [quantity, setQuantity] = useState(1);
+	// Find the size option from product.options
+	const sizeOption = product?.options?.find(
+		(opt) => opt.name?.toLowerCase() === "size"
+	);
+	const availableSizes = sizeOption?.values?.map((v) => v.name) || [];
+	const [selectedSize, setSelectedSize] = useState("");
 
 	useEffect(() => {
 		fetchProductById(id);
-		console.log(product);
 	}, [id]);
 
 	useEffect(() => {
@@ -27,6 +35,14 @@ const ProductDetailScreen = () => {
 			swiperRef.current.swiper.slideTo(activeIndex, 0);
 		}
 	}, [activeIndex]);
+
+	const handleAddToCart = (productId, quantity) => {
+		if (!selectedSize) {
+			toast.error("Please select a size before adding to cart.");
+			return;
+		}
+		addToCart(productId, quantity, product?.name, { Size: selectedSize });
+	};
 
 	if (productLoading) {
 		return <Preloader />;
@@ -71,16 +87,113 @@ const ProductDetailScreen = () => {
 										__html: product?.description,
 									}}
 								/>
+								{availableSizes.length > 0 && (
+									<div
+										className="mb-3 d-flex align-items-center flex-wrap"
+										style={{ gap: 12 }}
+									>
+										<span style={{ fontWeight: 500, marginRight: 8 }}>
+											Select Size:
+										</span>
+										{availableSizes.map((size) => (
+											<button
+												key={size}
+												type="button"
+												className={`btn btn-outline-dark px-3 py-2 fw-bold${
+													selectedSize === String(size)
+														? " bg-dark text-white"
+														: ""
+												}`}
+												style={{
+													borderRadius: 8,
+													borderColor:
+														selectedSize === String(size)
+															? "#ca1515"
+															: undefined,
+													color:
+														selectedSize === String(size) ? "#fff" : undefined,
+													background:
+														selectedSize === String(size)
+															? "#ca1515"
+															: undefined,
+													transition: "all 0.2s",
+												}}
+												onClick={() => setSelectedSize(String(size))}
+											>
+												{size}
+											</button>
+										))}
+									</div>
+								)}
 								<div className="product__details__button">
 									<div className="quantity">
 										<span>Quantity:</span>
-										<div className="pro-qty">
-											<input type="text" defaultValue={1} />
+										<div className="pro-qty d-flex align-items-center">
+											<button
+												type="button"
+												className="btn btn-light border px-3 py-1 shadow-sm fs-5 fw-bold"
+												style={{
+													borderRadius: "50%",
+													width: 36,
+													height: 36,
+													display: "flex",
+													alignItems: "center",
+													justifyContent: "center",
+													color: "#ca1515",
+													borderColor: "#ca1515",
+													marginRight: 8,
+												}}
+												onClick={() => setQuantity((q) => (q > 1 ? q - 1 : 1))}
+												aria-label="Decrease quantity"
+											>
+												-
+											</button>
+											<input
+												type="number"
+												value={quantity}
+												min={1}
+												disabled
+												style={{
+													width: 50,
+													textAlign: "center",
+													background: "#fff",
+													border: "none",
+													fontWeight: 600,
+													fontSize: 18,
+												}}
+												readOnly
+											/>
+											<button
+												type="button"
+												className="btn btn-light border px-3 py-1 shadow-sm fs-5 fw-bold"
+												style={{
+													borderRadius: "50%",
+													width: 36,
+													height: 36,
+													display: "flex",
+													alignItems: "center",
+													justifyContent: "center",
+													color: "#ca1515",
+													borderColor: "#ca1515",
+												}}
+												onClick={() => setQuantity((q) => q + 1)}
+												aria-label="Increase quantity"
+											>
+												+
+											</button>
 										</div>
 									</div>
-									<a href="#" className="cart-btn">
+									<div
+										style={{ cursor: "pointer" }}
+										onClick={() => {
+											if (quantity > 0) {
+												handleAddToCart(product.id, parseInt(quantity));
+											}
+										}}
+										className="cart-btn"
+									>
 										<span className="icon_bag_alt" /> Add to cart
-									</a>
+									</div>
 									<ul>
 										<li>
 											<a href="#">
@@ -94,7 +207,7 @@ const ProductDetailScreen = () => {
 										</li>
 									</ul>
 								</div>
-								<div className="product__details__widget">
+								{/* <div className="product__details__widget">
 									<ul>
 										<li>
 											<span>Availability:</span>
@@ -151,7 +264,7 @@ const ProductDetailScreen = () => {
 											<p>Free shipping</p>
 										</li>
 									</ul>
-								</div>
+								</div> */}
 							</div>
 						</div>
 					</div>
