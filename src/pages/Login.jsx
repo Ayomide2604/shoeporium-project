@@ -2,22 +2,31 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/site-logo.png";
 import useAuthStore from "../store/useAuthStore";
+import { useCartStore } from "../store/useCartStore";
+
 const Login = () => {
 	const { login, loading, user, error } = useAuthStore();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
 
+	// Handles form submission
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		login(email, password);
 	};
 
+	// Watch for successful login
 	useEffect(() => {
 		if (user) {
+			// Merge anon cart to Swell cart
+			useCartStore.getState().mergeAnonWithSwell();
+
+			// Redirect after merging
 			navigate("/");
 		}
 	}, [user, navigate]);
+
 	return (
 		<div
 			className="container d-flex align-items-center justify-content-center"
@@ -46,6 +55,7 @@ const Login = () => {
 						Welcome back! Please login to your account.
 					</p>
 				</div>
+
 				<form onSubmit={handleSubmit}>
 					<div className="mb-3">
 						<label
@@ -61,9 +71,7 @@ const Login = () => {
 							id="email"
 							placeholder="Enter your email"
 							required
-							onChange={(e) => {
-								setEmail(e.target.value);
-							}}
+							onChange={(e) => setEmail(e.target.value)}
 							style={{ borderRadius: 8, fontFamily: "Montserrat, sans-serif" }}
 						/>
 					</div>
@@ -81,9 +89,7 @@ const Login = () => {
 							id="password"
 							placeholder="Enter your password"
 							required
-							onChange={(e) => {
-								setPassword(e.target.value);
-							}}
+							onChange={(e) => setPassword(e.target.value)}
 							style={{ borderRadius: 8, fontFamily: "Montserrat, sans-serif" }}
 						/>
 					</div>
@@ -110,6 +116,7 @@ const Login = () => {
 							Forgot password?
 						</a>
 					</div>
+
 					<button
 						type="submit"
 						className="btn w-100"
@@ -122,10 +129,21 @@ const Login = () => {
 							padding: "12px 0",
 							fontSize: 16,
 						}}
+						disabled={loading}
 					>
-						Sign In
+						{loading ? "Signing in..." : "Sign In"}
 					</button>
 				</form>
+
+				{error && (
+					<div
+						className="text-danger text-center mt-3"
+						style={{ fontSize: 14 }}
+					>
+						{error}
+					</div>
+				)}
+
 				<div className="text-center mt-4">
 					<span style={{ fontSize: 14 }}>
 						Don't have an account?{" "}
