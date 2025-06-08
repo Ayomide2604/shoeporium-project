@@ -430,7 +430,7 @@ ol {
 
 .header__right__auth {
 	display: inline-block;
-	margin-right: 25px;
+	/* margin-right: 25px; */
 }
 
 .header__right__auth a {

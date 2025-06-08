@@ -2,9 +2,11 @@ import { FaBagShopping, FaBars, FaRegHeart, FaX } from "react-icons/fa6";
 import { useState } from "react";
 import logo from "../assets/img/site-logo.png";
 import OffCanvas from "./OffCanvas";
+import useAuthStore from "../store/useAuthStore";
 
 const Header = () => {
 	const [offCanvasOpen, setOffCanvasOpen] = useState(false);
+	const { user, logout } = useAuthStore();
 
 	return (
 		<header className="header" style={{ maxHeight: "100px" }}>
@@ -65,8 +67,19 @@ const Header = () => {
 					<div className="col-lg-3">
 						<div className="header__right">
 							<div className="header__right__auth">
-								<a href="#">Login</a>
-								<a href="#">Register</a>
+								{user ? (
+									<>
+										<a>Welcome ({user?.first_name})</a>
+										<a onClick={logout} style={{ cursor: "pointer" }}>
+											Logout
+										</a>
+									</>
+								) : (
+									<>
+										<a href="/login">Login</a>
+										<a href="/signup">Register</a>
+									</>
+								)}
 							</div>
 							<ul className="header__right__widget">
 								<li>

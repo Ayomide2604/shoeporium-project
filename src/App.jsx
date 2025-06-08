@@ -5,6 +5,8 @@ import Footer from "./components/Footer";
 import HomeScreen from "./screens/HomeScreen";
 import ShopScreen from "./screens/ShopScreen";
 import ProductDetailScreen from "./screens/ProductDetailScreen";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 function App() {
 	return (
 		<>
@@ -14,6 +16,8 @@ function App() {
 					<Route path="/" element={<HomeScreen />} />
 					<Route path="/shop" element={<ShopScreen />} />
 					<Route path="/shop/:id" element={<ProductDetailScreen />} />
+					<Route path="/login" element={<Login />} />
+					<Route path="/signup" element={<Signup />} />
 				</Routes>
 			</div>
 			<Footer />
