@@ -1001,7 +1001,6 @@ ol {
 	font-size: 15px;
 	font-weight: 500;
 	color: #111111;
-	margin-right: 18px;
 	display: inline-block;
 	position: relative;
 }
@@ -1010,7 +1009,6 @@ ol {
 	position: absolute;
 	right: -14px;
 	top: 0;
-	content: "";
 	font-family: "FontAwesome";
 }
 
@@ -1279,7 +1277,7 @@ ol {
 .product__item__text h6 a {
 	font-size: 14px;
 	color: #111111;
-	text-decoration: none;
+	text-decoration: noneff;
 }
 
 .product__item__text .rating {
@@ -1364,7 +1362,6 @@ ol {
 .categories__accordion .card-body li {
 	list-style: none;
 	position: relative;
-	padding-left: 16px;
 }
 
 .categories__accordion .card-body li:before {
@@ -1385,7 +1382,6 @@ ol {
 
 .categories__accordion .card-heading a:after,
 .categories__accordion .card-heading > a.active[aria-expanded="false"]:after {
-	content: "";
 	font-size: 14px;
 	font-family: "FontAwesome";
 	color: #666666;
@@ -1395,7 +1391,6 @@ ol {
 }
 
 .categories__accordion .card-heading.active a:after {
-	content: "";
 	font-size: 14px;
 	font-family: "FontAwesome";
 	color: #666666;
@@ -1406,7 +1401,6 @@ ol {
 
 .categories__accordion .card-heading a[aria-expanded="true"]:after,
 .categories__accordion .card-heading > a.active:after {
-	content: "";
 	font-size: 14px;
 	font-family: "FontAwesome";
 	color: #666666;

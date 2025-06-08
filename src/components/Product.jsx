@@ -2,6 +2,7 @@ import { FaBagShopping, FaRegHeart } from "react-icons/fa6";
 import { BsArrowsAngleExpand } from "react-icons/bs";
 
 import formatter from "./../utils/currencyFormatter";
+import { Link } from "react-router-dom";
 const Product = ({ id, name, price, image }) => {
 	return (
 		<div className="product__item">
@@ -40,9 +41,9 @@ const Product = ({ id, name, price, image }) => {
 					}}
 				>
 					<li>
-						<a href={image} className="image-popup ">
+						<Link to={`/shop/${id}`} className="image-popup ">
 							<BsArrowsAngleExpand className="arrow_expand" />
-						</a>
+						</Link>
 					</li>
 					<li>
 						<a href="#">
