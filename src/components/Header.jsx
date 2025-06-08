@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from "../assets/img/site-logo.png";
 import OffCanvas from "./OffCanvas";
 import useAuthStore from "../store/useAuthStore";
+import { Link } from "react-router-dom";
 
 const Header = () => {
 	const [offCanvasOpen, setOffCanvasOpen] = useState(false);
@@ -92,10 +93,10 @@ const Header = () => {
 									</a>
 								</li>
 								<li>
-									<a href="#">
+									<Link to="/cart">
 										<FaBagShopping />
 										<div className="tip">2</div>
-									</a>
+									</Link>
 								</li>
 							</ul>
 						</div>
