@@ -34,7 +34,6 @@ const Hero = () => {
 									/>
 									<div className="categories__text">
 										<h4>Adidas</h4>
-										<p>358 items</p>
 										<a href="#">Shop now</a>
 									</div>
 								</div>
@@ -47,7 +46,6 @@ const Hero = () => {
 									/>
 									<div className="categories__text">
 										<h4>Nike</h4>
-										<p>273 items</p>
 										<a href="#">Shop now</a>
 									</div>
 								</div>
@@ -60,7 +58,6 @@ const Hero = () => {
 									/>
 									<div className="categories__text">
 										<h4>Puma</h4>
-										<p>159 items</p>
 										<a href="#">Shop now</a>
 									</div>
 								</div>
@@ -73,7 +70,6 @@ const Hero = () => {
 									/>
 									<div className="categories__text">
 										<h4>New Balance</h4>
-										<p>792 items</p>
 										<a href="#">Shop now</a>
 									</div>
 								</div>

@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/img/site-logo.png";
 import useAuthStore from "../store/useAuthStore";
-import { useCartStore } from "../store/useCartStore";
 
 const Login = () => {
 	const { login, loading, user, error } = useAuthStore();
@@ -19,11 +18,8 @@ const Login = () => {
 	// Watch for successful login
 	useEffect(() => {
 		if (user) {
-			// Merge anon cart to Swell cart
-			useCartStore.getState().mergeAnonWithSwell();
-
-			// Redirect after merging
-			navigate("/");
+			// Redirect to cart
+			navigate("/cart");
 		}
 	}, [user, navigate]);
 
