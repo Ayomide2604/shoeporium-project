@@ -8,6 +8,9 @@ import swell from "../utils/swellApi";
 import useCartStore from "../store/useCartStore";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Preloader from "../components/Preloader";
+
+const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
 const CheckoutScreen = () => {
 	const { items, getCart, clearCart } = useCartStore();
@@ -46,20 +49,106 @@ const CheckoutScreen = () => {
 		}
 	};
 
+	// Validate shipping details
+	const validateShippingDetails = () => {
+		const form = document.querySelector(".checkout__form");
+		if (!form) return false;
+		const formData = new FormData(form);
+		const requiredFields = [
+			"firstName",
+			"lastName",
+			"phone",
+			"state",
+			"city",
+			"address",
+		];
+		for (const field of requiredFields) {
+			if (!formData.get(field) || !formData.get(field).trim()) {
+				toast.error("Please fill all required shipping details.");
+				return false;
+			}
+		}
+		return true;
+	};
+
 	const handlePlaceOrderClick = async () => {
 		updateShippingDetails();
+		if (!validateShippingDetails()) return;
 		setLoading(true);
-		try {
-			await placeOrder(
-				items,
-				useOrderStore.getState().shippingDetails,
-				clearCart,
-				navigate,
-				toast
-			);
-		} finally {
-			setLoading(false);
+		const amount = items.reduce(
+			(sum, item) => sum + item.price * item.quantity,
+			0
+		);
+		let email = useOrderStore.getState().shippingDetails.email;
+		if (!email || typeof email !== "string" || !email.includes("@")) {
+			email = "test@example.com";
 		}
+		await new Promise((resolve) => {
+			const scriptReady = () => {
+				if (!window.PaystackPop) {
+					toast.error("Paystack failed to load. Please try again.");
+					setLoading(false);
+					return;
+				}
+				const handler = window.PaystackPop.setup({
+					key: PAYSTACK_PUBLIC_KEY,
+					email,
+					amount: amount * 100,
+					callback: function (response) {
+						if (
+							typeof response === "object" &&
+							response &&
+							response.reference
+						) {
+							(async () => {
+								try {
+									await placeOrder(
+										items,
+										{
+											...useOrderStore.getState().shippingDetails,
+											paid: true,
+											paymentRef: response.reference,
+										},
+										clearCart,
+										navigate,
+										toast
+									);
+									toast.success("Payment successful! Order placed.");
+								} catch (err) {
+									toast.error(
+										"Order placement failed after payment. Please contact support."
+									);
+								}
+								setLoading(false);
+								resolve();
+							})();
+						} else {
+							setLoading(false);
+							resolve();
+						}
+					},
+					onClose: function () {
+						setLoading(false);
+						resolve();
+					},
+				});
+				handler.openIframe();
+			};
+			if (window.PaystackPop) {
+				scriptReady();
+			} else {
+				const script = document.getElementById("paystack-script");
+				if (script) {
+					script.onload = scriptReady;
+				} else {
+					const newScript = document.createElement("script");
+					newScript.id = "paystack-script";
+					newScript.src = "https://js.paystack.co/v1/inline.js";
+					newScript.onload = scriptReady;
+					document.body.appendChild(newScript);
+				}
+			}
+		});
 	};
 
 	// Make handlePlaceOrder globally accessible for the form
@@ -67,6 +156,7 @@ const CheckoutScreen = () => {
 
 	return (
 		<div>
+			{loading && <Preloader message="Placing order..." />}
 			<BreadCrumb title="Shopping Cart" />
 			<section className="checkout spad">
 				<div className="container">

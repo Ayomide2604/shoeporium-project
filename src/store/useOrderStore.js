@@ -27,32 +27,34 @@ const useOrderStore = create((set) => ({
 				address: "",
 			},
 		}),
-	placeOrder: async (
-		cartItems,
-		shippingDetails,
-		clearCart,
-		navigate,
-		toast
-	) => {
+	placeOrder: async (items, shippingDetails, clearCart, navigate, toast) => {
 		try {
-			if (
-				!shippingDetails.firstName ||
-				!shippingDetails.lastName ||
-				!shippingDetails.phone ||
-				!shippingDetails.state ||
-				!shippingDetails.city ||
-				!shippingDetails.address
-			) {
-				toast.error(
-					"Please fill in all shipping details before placing your order."
-				);
-				return;
+			if (!swell || !swell.cart || !swell.cart.update) {
+				console.error("Swell API is not initialized correctly.", { swell });
+				toast &&
+					toast.error("Order placement failed: Swell API not initialized.");
+				throw new Error("Swell API is not initialized correctly.");
 			}
-
-			// 1. Update shipping info on the cart
-			const updatedCart = await swell.cart.update({
+			// Prepare billing info from shipping details
+			const billingInfo = {
+				method: "paystack",
+				name: `${shippingDetails.firstName} ${shippingDetails.lastName}`.trim(),
+				first_name: shippingDetails.firstName,
+				last_name: shippingDetails.lastName,
+				address1: shippingDetails.address,
+				address2: shippingDetails.address2 || "",
+				city: shippingDetails.city,
+				state: shippingDetails.state,
+				zip: shippingDetails.zip || "",
+				country: shippingDetails.country || "NG",
+				phone: shippingDetails.phone,
+			};
+			// 1. Update the cart with shipping and billing info
+			await swell.cart.update({
 				shipping: {
 					name: `${shippingDetails.firstName} ${shippingDetails.lastName}`.trim(),
+					first_name: shippingDetails.firstName,
+					last_name: shippingDetails.lastName,
 					address1: shippingDetails.address,
 					address2: shippingDetails.address2 || "",
 					city: shippingDetails.city,
@@ -61,19 +63,18 @@ const useOrderStore = create((set) => ({
 					country: shippingDetails.country || "NG",
 					phone: shippingDetails.phone,
 				},
+				billing: billingInfo,
 			});
-
 			// 2. Submit the order
 			const order = await swell.cart.submitOrder();
-
-			// 3. Clear the cart in Zustand
 			clearCart();
-
-			toast.success("Order placed successfully!");
-			navigate("/", { replace: true });
+			toast && toast.success("Order placed successfully!");
+			navigate && navigate("/account/orders");
+			return order;
 		} catch (err) {
-			toast.error("Failed to place order. Please try again.");
-			console.error("Order error:", err);
+			console.error("Order placement failed:", err);
+			toast && toast.error("Order placement failed. Please try again.");
+			throw err;
 		}
 	},
 	getOrders: async ({ limit = 10, page = 1 } = {}) => {
