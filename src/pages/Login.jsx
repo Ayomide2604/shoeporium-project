@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import logo from "../assets/img/site-logo.png";
 import useAuthStore from "../store/useAuthStore";
 
@@ -8,6 +8,7 @@ const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	// Handles form submission
 	const handleSubmit = (e) => {
@@ -18,10 +19,11 @@ const Login = () => {
 	// Watch for successful login
 	useEffect(() => {
 		if (user) {
-			// Redirect to cart
-			navigate("/cart");
+			const params = new URLSearchParams(location.search);
+			const redirect = params.get("redirect");
+			navigate(redirect ? redirect : "/cart", { replace: true });
 		}
-	}, [user, navigate]);
+	}, [user, navigate, location.search]);
 
 	return (
 		<div

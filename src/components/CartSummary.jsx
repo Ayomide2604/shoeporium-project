@@ -1,9 +1,8 @@
 import React from "react";
-import { useCartStore } from "../store/useCartStore";
 import formatter from "../utils/currencyFormatter";
+import { Link } from "react-router-dom";
 
-const CartSummary = () => {
-	const items = useCartStore((state) => state.items);
+const CartSummary = ({ items }) => {
 	const subtotal = items.reduce(
 		(sum, item) => sum + item.price * item.quantity,
 		0
@@ -21,9 +20,9 @@ const CartSummary = () => {
 					Total <span>{formatter.format(total)}</span>
 				</li>
 			</ul>
-			<a href="#" className="primary-btn">
+			<Link to="/checkout" className="primary-btn">
 				Proceed to checkout
-			</a>
+			</Link>
 		</div>
 	);
 };

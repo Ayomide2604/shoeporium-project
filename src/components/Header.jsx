@@ -4,7 +4,7 @@ import logo from "../assets/img/site-logo.png";
 import OffCanvas from "./OffCanvas";
 import useAuthStore from "../store/useAuthStore";
 import { Link } from "react-router-dom";
-import { useCartStore } from "../store/useCartStore";
+import useCartStore from "../store/useCartStore";
 
 const Header = () => {
 	const [offCanvasOpen, setOffCanvasOpen] = useState(false);

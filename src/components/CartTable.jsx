@@ -1,12 +1,7 @@
 import { FaX } from "react-icons/fa6";
-import { useCartStore } from "../store/useCartStore";
 import formatter from "../utils/currencyFormatter";
 
-const CartTable = () => {
-	const items = useCartStore((state) => state.items);
-	const removeFromCart = useCartStore((state) => state.removeFromCart);
-	const updateCart = useCartStore((state) => state.updateCart);
-
+const CartTable = ({ items, removeFromCart, updateCart }) => {
 	if (!items.length) {
 		return (
 			<div className="shop__cart__table">

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import useProductStore from "../store/useProductStore";
 import Preloader from "../components/Preloader";
 import formatter from "../utils/currencyFormatter";
-import { useCartStore } from "../store/useCartStore";
+import useCartStore from "../store/useCartStore";
 import ProductDetailImage from "../components/ProductDetailImage";
 import { toast } from "react-toastify";
 
@@ -38,7 +38,7 @@ const ProductDetailScreen = () => {
 
 	const handleAddToCart = (productId, quantity) => {
 		if (!selectedSize) {
-			toast.error("Please select a size before adding to cart.");
+			alert("Please select a size before adding to cart.");
 			return;
 		}
 		addToCart(productId, quantity, product?.name, { Size: selectedSize });

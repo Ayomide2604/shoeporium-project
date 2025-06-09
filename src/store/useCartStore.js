@@ -2,7 +2,7 @@ import { create } from "zustand";
 import swell from "../utils/swellApi";
 import { toast } from "react-toastify";
 
-export const useCartStore = create((set, get) => ({
+const useCartStore = create((set, get) => ({
 	items: [],
 
 	// Get Swell cart (authenticated or anon)
@@ -73,7 +73,6 @@ export const useCartStore = create((set, get) => ({
 
 			await swell.cart.setItems([]);
 			set({ items: [] });
-			toast.info("Cart cleared.");
 		} catch (err) {
 			toast.error("Failed to clear cart.");
 			console.error("Clear cart error:", err);
@@ -103,3 +102,5 @@ export const useCartStore = create((set, get) => ({
 		return get().items.reduce((sum, item) => sum + (item.quantity || 0), 0);
 	},
 }));
+
+export default useCartStore;
